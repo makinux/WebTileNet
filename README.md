@@ -252,7 +252,7 @@ htmlディレクトリ内のファイルをhttpサーバーに設置してくだ
 
 入力例(シームレス標高サービス PNG標高タイル)：
 
-	http://gsj-seamless.jp/labs/elev/m/{z}/{y}/{x}.png
+	https://gsj-seamless.jp/labs/elev/m/{z}/{y}/{x}.png
 
 タイル座標については以下のように記述してください。
 
