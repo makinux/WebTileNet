@@ -196,7 +196,8 @@ OS：Ubuntu 14.04 64bit
 6.workspaceディレクトリ内にtrain_dumpディレクトリ内のソースコードを設置してください。
 
 
-環境設定については次のWebDNNのドキュメントも参考にしてください。→ <https://mil-tokyo.github.io/webdnn/docs/tutorial/setup.html>
+環境設定については次のWebDNNのドキュメントも参考にしてください。
+→ <https://mil-tokyo.github.io/webdnn/docs/tutorial/setup.html>
 
 
 ### 学習
@@ -238,9 +239,11 @@ htmlディレクトリ内のファイルをhttpサーバーに設置してくだ
 
 設置した場所のURL/index.htmlにアクセスするとページが表示されます。
 
+デモは[こちら](https://makinux.github.io/WebTileNet/html/index.html)
+
 ### 操作方法
 #### 学習モデルの読み込み
-・Model Pathに変換済み学習モデルがあるURLを入力します。
+・Model Pathに変換済み学習モデルがあるURLを入力します。初期値として、同梱しているPNG標高タイルからCS立体図へ変換を行なう学習済みモデルへのパスが入力されています。(こちらのモデルは[シームレス標高サービス PNG標高タイル](https://gsj-seamless.jp/labs/elev/)、[CS立体図（5mDEMもあり）](http://kouapp.main.jp/csmap/japan/csjapan.html)を学習データとして使わせていただきました。)
 
 ・model loadボタンをクリックすると学習モデルが読み込まれます。
 
