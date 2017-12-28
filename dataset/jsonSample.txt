@@ -1,0 +1,14 @@
+{
+ "targetURL": {
+               "url": "http://kouapp.main.jp/csmap/tile/japan/", 
+               "type": "tile", 
+               "format": "{z}/{x}/{y}.jpg"
+              }, 
+ "inputURL": [
+              {
+               "url": "http://gsj-seamless.jp/labs/elev/m/", 
+               "type": "tile", 
+               "format": "{z}/{y}/{x}.png"
+              }
+             ]
+}
