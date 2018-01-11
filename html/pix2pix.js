@@ -55,12 +55,14 @@ window.onload = function() {
 	viewer = new Cesium.Viewer('cesiumContainer');
 
 	document.getElementById("modelURL").value = './csmap';
-	document.getElementById("tileURL").value = "https://gsj-seamless.jp/labs/elev/m/{z}/{y}/{x}.png";
-	document.getElementById("tileStartX").value = 7286;
-	document.getElementById("tileEndX").value = 7290;
-	document.getElementById("tileStartY").value = 3230;
-	document.getElementById("tileEndY").value = 3231;
+	document.getElementById("tileURL").value = "http://gsj-seamless.jp/labs/elev/m/{z}/{y}/{x}.png";
+	document.getElementById("tileStartX").value = 7075;
+	document.getElementById("tileEndX").value = 7082;
+	document.getElementById("tileStartY").value = 3299;
+	document.getElementById("tileEndY").value = 3306;
 	document.getElementById("tileZ").value = 13;
+
+	viewer.camera.flyTo({ destination: Cesium.Cartesian3.fromDegrees(131.103889, 32.884167, 70000), duration:0.0});
 };
 
 
