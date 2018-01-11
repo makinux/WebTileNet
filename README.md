@@ -199,8 +199,8 @@ Operation is confirmed in the following environment.
 	mkdir workspace
 
 ##### 6.Set the source code in the train_dump directory in the workspace directory.
-Please refer to the following WebDNN document for environment setting.
-→ <https://mil-tokyo.github.io/webdnn/docs/tutorial/setup.html>
+Please refer to the following [WebDNN document](https://mil-tokyo.github.io/webdnn/docs/tutorial/setup.html) for environment setting.
+
 
 
 ### Learning
@@ -242,11 +242,11 @@ Place the files in the html directory on the http server. Also, if you want to u
 
 When you access the URL /index.html of the installation place, the page will be displayed.
 
-The demo is [here] (https://makinux.github.io/WebTileNet/html/index.html)
+The demo is [here](https://makinux.github.io/WebTileNet/html/index.html)
 
 ### Method of operation
 #### Loading the Learning Model
-Enter the URL with converted learning model in "Model Path". As the initial value, the path to the learned model that converts from the PNG elevation tile that is bundled to the CS stereoscopic figure is entered. (This model is [seamless altitude service PNG elevation tile] (https://gsj-seamless.jp/labs/elev/), [CS solid figure (with 5mDEM also)] (http://kouapp.main.jp/csmap/japan/csjapan.html) was used as learning data.)
+Enter the URL with converted learning model in "Model Path". As the initial value, the path to the learned model that converts from the PNG elevation tile that is bundled to the CS stereoscopic figure is entered. (This model is [seamless altitude service PNG elevation tile](https://gsj-seamless.jp/labs/elev/), [CS solid figure (with 5mDEM also)](http://kouapp.main.jp/csmap/japan/csjapan.html) was used as learning data.)
 
 Click the "model load" button to load the learning model.
 
