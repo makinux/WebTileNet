@@ -261,8 +261,8 @@ In the "Input Tile", enter the destination URL of the tile
 
 	{z}: zoom level, {x}: X coordinate of tile, {y}: Y coordinate of tile
 
-Specify the range of the map tile to be converted. Tile coordinates in the vicinity of Chiba prefecture are input as an initial value. For Tile range X, enter the X coordinate of the tile, the Y coordinate of the tile in the Tile range Y, and the zoom level of the tile in the Tile Z.
+Specify the range of the map tile to be converted. Tile coordinates around Kumamoto prefecture are input as an initial value. For Tile range "X", enter the X coordinate of the tile, the Y coordinate of the tile in the Tile range "Y", and the zoom level of the tile in the Tile "Z".
 
- Click convert to start converting tiles.
+ Click "convert" to start converting tiles.
 
- When you click clear, converted tiles on Cesium will be deleted.
+ When you click "clear", converted tiles on Cesium will be deleted.
