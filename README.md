@@ -2,6 +2,9 @@
 This program learns tile image as data set with chainer version pix2pix and displays tiles converted using WebDNN on Cesium.
  I created a program based on the source code published here (<https://qiita.com/knok/items/45f4bbe3f0058eba27e6>).
 
+[日本語READMEはこちら][linkpos1]
+[linkpos1]: https://github.com/makinux/WebTileNet/blob/master/README.jp.md#linkpos1 "日本語README"
+
 ## Data set creation
 ### Operating environment
 Operation is confirmed in the following environment.
@@ -93,13 +96,13 @@ Read multiple tiles within the specified range and create learning data and test
 
 ##### Command line arguments
 
-	Argument 1 Position in the x direction of the tile that is the starting point of the specified range
-	Argument 2 x-direction position of the tile which is the end point of the specified range
-	Argument 3 position in the y direction of the tile that is the starting point of the specified range
-	Argument 4 The position in the y direction of the tile that is the end point of the specified range
-	Argument 5 Zoom level
-	--inputJson Specify the file in json format that sets the map tile acquisition destination URL. The default is "./jsonSample.txt".
-	--outputPath Specify the output destination directory of the data set. If there is no directory, it will be generated automatically. The default is "Data".
+	Argument1:Position in the x direction of the tile that is the starting point of the specified range
+	Argument2:x-direction position of the tile which is the end point of the specified range
+	Argument3:Position in the y direction of the tile that is the starting point of the specified range
+	Argument4:The position in the y direction of the tile that is the end point of the specified range
+	Argument5:Zoom level
+	--inputJson:Specify the file in json format that sets the map tile acquisition destination URL. The default is "./jsonSample.txt".
+	--outputPath:Specify the output destination directory of the data set. If there is no directory, it will be generated automatically. The default is "Data".
 
 After execution, `{serial number}_{x coordinate}_{y coordinate}_{zoom level}.png` is generated for the number of tiles acquired in the directory specified by - outputPath.
 
