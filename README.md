@@ -1,6 +1,6 @@
 # WebTileNet
 This program learns tile image as data set with chainer version pix2pix and displays tiles converted using WebDNN on Cesium.
- I created a program based on the source code published here (<https://qiita.com/knok/items/45f4bbe3f0058eba27e6>).
+ I created a program based on the source code published [here](https://qiita.com/knok/items/45f4bbe3f0058eba27e6).
 
 [日本語READMEはこちら][linkpos1]
 
