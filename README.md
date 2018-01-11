@@ -1,168 +1,161 @@
 # WebTileNet
-このプログラムはタイル画像をデータセットとしてchainer版pix2pixで学習を行い、Cesium上にWebDNNを用いて変換したタイルを表示するものです。
+This program learns tile image as data set with chainer version pix2pix and displays tiles converted using WebDNN on Cesium.
+I created a program based on the source code published here (<https://qiita.com/knok/items/45f4bbe3f0058eba27e6>).
 
-なおこちら( <https://qiita.com/knok/items/45f4bbe3f0058eba27e6> )で公開されているソースコードをもとにプログラムを作成しました。
+## Data set creation
+### Operating environment
+Operation is confirmed in the following environment.
 
-## データセット作成
-### 動作環境
-以下の環境で動作を確認しています。
+OS: Ubuntu 14.04 64bit
+Software: python 2.7.6
 
-OS：Ubuntu 14.04 64bit
-
-ソフトウェア : python2.7.6
-
-### インストール方法
-1.実行に必要な各パッケージをインストールします。
+### Installation method
+1. Install each package required for execution.
 
 	sudo pip install pillow requests
 
-2.datasetディレクトリ内のソースコードを任意の場所に設置してください。
+2. Place the source code in the .dataset directory in an arbitrary place.
 
 
-### データセット作成手順
-#### 地図タイル取得先URLの設定
+### Data Set Creation Procedure
+#### Setting of Map Tile Destination URL
 
-地図タイルを取得するURLをJSON形式で設定したファイルを作成します。作成例としてjsonSample.txtを同梱しているのでこちらを基に作成してください。
+Create a file in which the map tile acquisition URL is set in JSON format. As a creation example, jsonSample.txt is bundled so please create it based on this.
 
-##### 教師データと入力データの設定
+##### Setting of teacher data and input data
 
-    {
-     "targetURL": 教師データとなる地図タイルの取得先URL
-    ,
-     "inputURL": [
-                   入力データとなる地図タイルの取得先URL
-                 ]
-    }
-
-
-教師データと入力データそれぞれの地図タイル取得先を設定します。地図タイル取得先の設定については下記の『地図タイルの取得先』を参照してください。
-
-
-##### 地図タイルの取得先
 	{
-	"url": 地図タイル取得先のベースURL ,
-	 "type": 取得する地図タイルの種類 ,
-	 "format": 取得する地図タイルの形式
+		"targetURL": URL from which the map tile serving as teacher data is obtained,
+		"inputURL": [
+			Acquisition destination URL of map tile to be input data
+		]
 	}
 
-・"url"		地図タイルの取得先のベースURL
-
-・"type"	取得する地図タイルの種類。タイル地図形式やWMTSは"tile"、WMSは"wms"になります。
-
-・"format"	拡張子やタイル座標、WMTS やWMSのパラメータなどの設定。詳細については下記の各タイル取得設定例を参照してください。
+Set the map tile acquisition destination for each teacher data and input data. For the setting of the map tile acquisition destination, refer to "Map tile acquisition destination" below.
 
 
-###### タイル地図形式の地図タイル取得先設定例(国土地理院 全国最新写真（シームレス）)：
+##### Where to get the map tile
+
 	{
-	"url": "http://cyberjapandata.gsi.go.jp/xyz/seamlessphoto/",
-	 "type": "tile",
-	 "format": "{z}/{x}/{y}.jpg"
+		"url": base URL of map tile acquisition destination,
+		"type": the type of map tile to be acquired,
+		"format": format of the map tile to be acquired
 	}
 
-タイル地図形式の"format"では主としてタイル座標と拡張子やWMTSのパラメータ等を設定します。取得先の形式に従って設定してください。
+· "url" base URL of map tile acquisition destination
 
-タイル座標については以下のように記述してください。
+· "type" The type of map tile to be acquired. Tile map format and WMTS are "tile", WMS is "wms".
 
-	{z} : ズームレベル、{x} : タイルのX座標、{y} : タイルのY座標
+· "format" extension and tile coordinates, WMTS and WMS parameters etc settings. For details, see the example of each tile acquisition setting below.
 
 
+##### # tile map type map tile acquisition destination setting example (Geographical Survey Institute National Latest Picture (Seamless)):
 
-###### WMS形式の地図タイル取得先設定例(地震ハザードステーション 地すべり地形分布図WMSサービス)：
 	{
-	"url": "http://www.j-shis.bosai.go.jp/map/wms/landslide?",
-	"type": "wms",
-	"format": "SERVICE=WMS&VERSION=1.3.0&REQUEST=GetMap&BBOX={minx},{miny},{maxx},{maxy}&CRS=EPSG:4612&WIDTH={output_width}&HEIGHT={output_height}&LAYERS=L-V3-S300&FORMAT=image/png&TRANSPARENT=FALSE"
+		"url": "http://cyberjapandata.gsi.go.jp/xyz/seamlessphoto/",
+		"type": "tile",
+		"format": "{z} / {x} / {y} .jpg"
 	}
 
-WMS形式の"format"ではWMSのパラメータ設定を行ないます。
+In tile map format "format", tile coordinates, extension, WMTS parameters etc. are mainly set. Please set according to the format of the acquisition destination.
 
-取得先の形式に従って設定してください。
+Please describe the tile coordinates as follows.
 
-WMSのパラメータの中で取得範囲指定を行なうBBOX、取得する画像のサイズを指定するWIDTH、HEIGHTについては以下のように記述してください。
-
-	BBOX={minx},{miny},{maxx},{maxy}
-	WIDTH={output_width}
-	HEIGHT={output_height}
+	{z}: zoom level, {x}: X coordinate of tile, {y}: Y coordinate of tile
 
 
-#### データセットを作成
-指定範囲内の複数のタイルを読み込み、タイル単位で学習用データやテスト用データを作成します。
+###### WMS format map tile acquisition example setting (Earthquake hazard station landslide topography map WMS service):
 
-・実行例：
+	{
+		"url": "http://www.j-shis.bosai.go.jp/map/wms/landslide?",
+		"type": "wms",
+		"format": "SERVICE=WMS&VERSION=1.3.0&REQUEST=GetMap&BBOX={minx},{miny},{maxx},{maxy}&CRS=EPSG:4612&WIDTH={output_width}&HEIGHT={output_height}&LAYERS=L-V3-S300&FORMAT=image/png&TRANSPARENT=FALSE"
+	}
+
+In WMS format "format", WMS parameters are set.
+
+Please set according to the format of the acquisition destination.
+
+Please describe the BBOX that specifies the acquisition range in WMS parameters, WIDTH and HEIGHT that specify the size of the image to be acquired as follows.
+
+	BBOX = {minx}, {miny}, {maxx}, {maxy}
+	WIDTH = {output_width}
+	HEIGHT = {output_height}
+
+#### Create dataset
+Read multiple tiles within the specified range and create learning data and test data on a tile-by-tile basis.
+
+· Example of execution:
 
 	python DataSetMake_imgjoin.py 7266 7295 3206 3229 13 --outputPath datasets/test/train --inputJson ./jsonSample.txt
 
-・コマンドライン引数
+· Command line arguments
 
-	引数1	指定する範囲の始点となるタイルのx方向の位置
-	引数2	指定する範囲の終点となるタイルのx方向の位置
-	引数3	指定する範囲の始点となるタイルのy方向の位置
-	引数4	指定する範囲の終点となるタイルのy方向の位置
-	引数5	ズームレベル
-	--inputJson	地図タイル取得先URLを設定したjson形式のファイルを指定します。デフォルトは"./jsonSample.txt"。
-	--outputPath	データセットの出力先ディレクトリの指定。ディレクトリがない場合は自動生成します。デフォルトは"Data"。
+	Argument 1 Position in the x direction of the tile that is the starting point of the specified range
+	Argument 2 x-direction position of the tile which is the end point of the specified range
+	Argument 3 position in the y direction of the tile that is the starting point of the specified range
+	Argument 4 The position in the y direction of the tile that is the end point of the specified range
+	Argument 5 Zoom level
+	--inputJson Specify the file in json format that sets the map tile acquisition destination URL. The default is "./jsonSample.txt".
+	--outputPath Specify the output destination directory of the data set. If there is no directory, it will be generated automatically. The default is "Data".
 
+· After execution, `{serial number} _ {x coordinate} _ {y coordinate} _ {zoom level}. Png` is generated for the number of tiles acquired in the directory specified by - outputPath.
 
-
-・実行後、--outputPathで指定したディレクトリ内に`{通し番号}_{x座標}_{y座標}_{ズームレベル}.png`が取得したタイルの枚数分生成されます。
-
-　また、プログラムを実行したディレクトリ内に取得したタイルを繋げた、`input_image{通し番号}.png、target_image{通し番号}.png`が生成されます。
+Also, 'input_image {serial number} .png, target_image {serial number} .png` is generated by connecting the acquired tiles to the directory where the program was executed.
 
 
+## Learning, model transformation
+### Operating environment
+Operation is confirmed in the following environment.
 
-## 学習、モデル変換
-### 動作環境
-以下の環境で動作を確認しています。
+OS: Ubuntu 14.04 64bit
+Software: python 3.6.3 (using pyenv)
 
-OS：Ubuntu 14.04 64bit
-
-ソフトウェア : python3.6.3(pyenvを使用)
-
-### インストール方法
-1.pyenvをインストールしてpython3.6.3を使えるようにします。
+### Installation method
+1. Install pyenv so that you can use python 3.6.3.
 
 	cd ~
-	sudo apt-get install  -y git
+	sudo apt-get install -y git
 	sudo apt-get install -y make gcc
 	sudo apt-get install -y make build-essential libssl-dev zlib1g-dev libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev libncursesw5-dev xz-utils
 
-	git clone git://github.com/yyuu/pyenv.git ~/.pyenv
-	git clone https://github.com/yyuu/pyenv-virtualenv.git ~/.pyenv/plugins/pyenv-virtualenv
+	git clone git: //github.com/yyuu/pyenv.git ~ / .pyenv
+	git clone https://github.com/yyuu/pyenv-virtualenv.git ~ / .pyenv / plugins / pyenv-virtualenv
 
-	vim ~/.bashrc
-	以下を追記します。
-	#-----ここから-----
-	export PYENV_ROOT=$HOME/.pyenv
-	export PATH=$PYENV_ROOT/bin:$PATH
-	eval "$(pyenv init -)"
-	#-----ここまで-----
+	vim ~ / .bashrc
+	# Add the following.
+	#-----from here-----
+	export PYENV_ROOT = $ HOME / .pyenv
+	export PATH = $ PYENV_ROOT / bin: $ PATH
+	eval "$ (pyenv init -)"
+	#-----So far-----
 
-	source ~/.bashrc
+	source ~ / .bashrc
 
-	# インストール可能なバージョンを調べてpython3.6.3をインストールします
+	# Check the installable version and install python 3.6.3
 	pyenv install -l
 	pyenv install 3.6.3
-	# pythonの環境を確認してpython3.6.3があることを確認します
+	# Check the environment of python and make sure python 3.6.3 exists
 	pyenv versions
 
-2.WebDNNをインストールします。
+2. Install WebDNN.
 
 	cd ~
 	git clone https://github.com/mil-tokyo/webdnn
 	cd webdnn
-	# pyenvでwebdnnディレクトリ内ではpython3.6.3を使うように設定します
+	# set pyenv to use python 3.6.3 in the webdnn directory
 	pyenv local 3.6.3
 	python setup.py install
 	sudo pip install chainer
 
-3.EmscriptenとEigenをインストールします。
+3. Install Emscripten and Eigen.
 
 	cd ~
-	# cmake 3.4.3以上が必要なのでない場合はインストールします
-	# 古いバージョンがあれば消しておきます
+	# cmake If you do not need 3.4.3 or higher install it
+	# I will erase the old version if there is one
 	sudo apt remove cmake
 	sudo apt-get install build-essential
-	# 取得先を確認(https://cmake.org/download/)し、wgetで取得します
+	# Confirm acquisition destination (https://cmake.org/download/) and get it with wget
 	wget https://cmake.org/files/v3.10/cmake-3.10.1.tar.gz
 	tar xf cmake-3.10.1.tar.gz
 	cd cmake-3.10.1
@@ -170,7 +163,7 @@ OS：Ubuntu 14.04 64bit
 	make
 	sudo make install
 
-	# Emscriptenをインストール
+	# Install Emscripten
 	cd ~
 	git clone https://github.com/juj/emsdk.git
 	cd emsdk
@@ -178,92 +171,87 @@ OS：Ubuntu 14.04 64bit
 	./emsdk activate sdk-incoming-64bit binaryen-master-64bit
 	source ./emsdk_env.sh
 
-	# Eigenをインストール
+	# Install Eigen
 	cd ~
 	wget http://bitbucket.org/eigen/eigen/get/3.3.3.tar.bz2
-	tar jxf 3.3.3.tar.bz2
-	export CPLUS_INCLUDE_PATH=$PWD/eigen-eigen-67e894c6cd8f
+	tar jxf 3.3.3.tar.bz 2
+	export CPLUS_INCLUDE_PATH = $ PWD / eigen - eigen - 67 e 894 c 6 c d 8 f
 
-4.実行に必要な各パッケージをインストールします。
+4. Install each package required for execution.
 
-	cd ~/webdnn
+	cd ~ / webdnn
 	sudo pip install pillow requests
 
-5.WebDNNディレクトリ内にworkspaceディレクトリを作成します。
+5. Create a workspace directory in the WebDNN directory.
 
 	mkdir workspace
 
-6.workspaceディレクトリ内にtrain_dumpディレクトリ内のソースコードを設置してください。
+6. Set the source code in the train_dump directory in the workspace directory.
+Please refer to the following WebDNN document for environment setting.
 
-
-環境設定については次のWebDNNのドキュメントも参考にしてください。
 → <https://mil-tokyo.github.io/webdnn/docs/tutorial/setup.html>
 
 
-### 学習
-・実行例：
+### Learning
+· Example of execution:
 
 	python train_joined.py --gpu 0 --dataset ./datasets/test/train --out ./models --epoch 300 --snapshot_interval 2000 --display_interval 100
 
-・コマンドライン引数
+· Command line arguments
 
-	--gpu		使用するGPUの番号。-1でCPUで学習。
-	--dataset	学習用データセットがあるディレクトリ
-	--out		学習モデルなどの出力先ディレクトリ
-	--epoch		学習回数
-	--snapshot_interval	学習モデルなどの出力間隔
-	--display_interval	学習状況のコンソール出力の間隔
+	--gpu "Number of the GPU to use. -1 learning with CPU."
+	--dataset "Directory containing training data sets"
+	--out "Output directory such as learning model"
+	--epoch "Number of learning"
+	--snapshot_interval "Output interval such as learning model"
+	--display_interval "Interval of learning status console output"
 
-・学習中に--outで指定したディレクトリに--snapshot_intervalで指定した間隔で学習モデルやテスト画像が出力されます。
+· Learning models and test images are output to the directory specified by --out during learning at intervals specified by --snapshot_interval.
 
-### モデル変換
-chainerで学習したモデルをWebDNNのモデルに変換します。
+### Model conversion
+We convert the model learned with chainer into the model of WebDNN.
 
-・実行例：
+· Example of execution:
 
 	python dump_graph.py --out ./out --enc-npz models/enc_iter_10000.npz --dec-npz models/dec_iter_10000.npz
 
-・コマンドライン引数
+· Command line arguments
 
-	--out	変換したモデルの出力先ディレクトリ
-	--enc-npz	変換元のモデル(enc_iter_XXXX.npzの名前のモデルを指定)
-	--dec-npz	変換元のモデル(dec_iter_XXXX.npzの名前のモデルを指定)
-
-
-・--outで指定したディレクトリに変換後のモデルが出力されます。このプログラムではWebAssembly用とWebGPU用の2種類のモデルが出力されます。
+	--out "Output directory of converted model"
+	--enc-npz "Model of conversion source (designation of enc_iter_XXXX.npz name model)"
+	--dec-npz "Source model (specify model with dec_iter_XXXX.npz name)"
 
 
-## Cesiumで変換したタイルを表示する
-### 動作環境
-htmlディレクトリ内のファイルをhttpサーバーに設置してください。また、変換済みの学習モデルを使用する場合はhttpサーバー内に設置してください。
+· The converted model is output to the directory specified by --out. In this program, two types of models for WebAssembly and WebGPU are output.
 
-設置した場所のURL/index.htmlにアクセスするとページが表示されます。
 
-デモは[こちら](https://makinux.github.io/WebTileNet/html/index.html)
+## Display tiles converted by Cesium
+### Operating environment
+Place the files in the html directory on the http server. Also, if you want to use the converted learning model, please install it in http server.
 
-### 操作方法
-#### 学習モデルの読み込み
-・Model Pathに変換済み学習モデルがあるURLを入力します。初期値として、同梱しているPNG標高タイルからCS立体図へ変換を行なう学習済みモデルへのパスが入力されています。(こちらのモデルは[シームレス標高サービス PNG標高タイル](https://gsj-seamless.jp/labs/elev/)、[CS立体図（5mDEMもあり）](http://kouapp.main.jp/csmap/japan/csjapan.html)を学習データとして使わせていただきました。)
+When you access the URL /index.html of the installation place, the page will be displayed.
 
-・model loadボタンをクリックすると学習モデルが読み込まれます。
+The demo is [here] (https://makinux.github.io/WebTileNet/html/index.html)
 
-#### タイル画像の変換
-・Input Tileにタイルの取得先URLを入力します
+### Method of operation
+#### Loading the Learning Model
+· Enter the URL with converted learning model in "Model Path". As the initial value, the path to the learned model that converts from the PNG elevation tile that is bundled to the CS stereoscopic figure is entered. (This model is [seamless altitude service PNG elevation tile] (https://gsj-seamless.jp/labs/elev/), [CS solid figure (with 5mDEM also)] (http://kouapp.main.jp/csmap/japan/csjapan.html) was used as learning data.)
 
-入力例(シームレス標高サービス PNG標高タイル)：
+· Click the "model load" button to load the learning model.
+
+#### Tile image conversion
+· In the "Input Tile", enter the destination URL of the tile
+
+Input example (seamless altitude service PNG elevation tile):
 
 	https://gsj-seamless.jp/labs/elev/m/{z}/{y}/{x}.png
 
-タイル座標については以下のように記述してください。
+Please describe the tile coordinates as follows.
 
-	{z} : ズームレベル、{x} : タイルのX座標、{y} : タイルのY座標
-・変換する地図タイルの範囲を指定します。初期値として千葉県付近のタイル座標が入力されています。Tile range XにはタイルのX座標、Tile range YにはタイルのY座標、Tile Zにはタイルのズームレベルを入力してください。
+	{z}: zoom level, {x}: X coordinate of tile, {y}: Y coordinate of tile
 
-・convertをクリックするとタイルの変換が開始されます。
+· Specify the range of the map tile to be converted. Tile coordinates in the vicinity of Chiba prefecture are input as an initial value. For Tile range X, enter the X coordinate of the tile, the Y coordinate of the tile in the Tile range Y, and the zoom level of the tile in the Tile Z.
 
-・clearをクリックするとCesium上の変換済みタイルが消去されます。
+· Click convert to start converting tiles.
 
-
-
-
-
+· When you click clear, converted tiles on Cesium will be deleted.
