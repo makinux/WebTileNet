@@ -10,12 +10,12 @@ Operation is confirmed in the following environment.
 	Software: python 2.7.6
 
 ### Installation method
-1. Install each package required for execution.
+1.Install each package required for execution.
 
 
 	sudo pip install pillow requests
 
-2. Place the source code in the .dataset directory in an arbitrary place.
+2.Place the source code in the .dataset directory in an arbitrary place.
 
 
 ### Data Set Creation Procedure
@@ -114,7 +114,7 @@ Operation is confirmed in the following environment.
 	Software: python 3.6.3 (using pyenv)
 
 ### Installation method
-1. Install pyenv so that you can use python 3.6.3.
+1.Install pyenv so that you can use python 3.6.3.
 
 
 	cd ~
@@ -142,7 +142,7 @@ Operation is confirmed in the following environment.
 	pyenv versions
 
 
-2. Install WebDNN.
+2.Install WebDNN.
 
 
 	cd ~
@@ -153,7 +153,7 @@ Operation is confirmed in the following environment.
 	python setup.py install
 	sudo pip install chainer
 
-3. Install Emscripten and Eigen.
+3.Install Emscripten and Eigen.
 
 
 	cd ~
@@ -183,18 +183,18 @@ Operation is confirmed in the following environment.
 	tar jxf 3.3.3.tar.bz 2
 	export CPLUS_INCLUDE_PATH = $ PWD / eigen - eigen - 67 e 894 c 6 c d 8 f
 
-4. Install each package required for execution.
+4.Install each package required for execution.
 
 
 	cd ~ / webdnn
 	sudo pip install pillow requests
 
-5. Create a workspace directory in the WebDNN directory.
+5.Create a workspace directory in the WebDNN directory.
 
 
 	mkdir workspace
 
-6. Set the source code in the train_dump directory in the workspace directory.
+6.Set the source code in the train_dump directory in the workspace directory.
 Please refer to the following WebDNN document for environment setting.
 → <https://mil-tokyo.github.io/webdnn/docs/tutorial/setup.html>
 
