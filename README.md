@@ -6,11 +6,12 @@ I created a program based on the source code published here (<https://qiita.com/
 ### Operating environment
 Operation is confirmed in the following environment.
 
-OS: Ubuntu 14.04 64bit
-Software: python 2.7.6
+	OS: Ubuntu 14.04 64bit
+	Software: python 2.7.6
 
 ### Installation method
 1. Install each package required for execution.
+
 
 	sudo pip install pillow requests
 
@@ -49,7 +50,7 @@ Set the map tile acquisition destination for each teacher data and input data. F
 · "format" extension and tile coordinates, WMTS and WMS parameters etc settings. For details, see the example of each tile acquisition setting below.
 
 
-##### # tile map type map tile acquisition destination setting example (Geographical Survey Institute National Latest Picture (Seamless)):
+###### tile map type map tile acquisition destination setting example (Geographical Survey Institute National Latest Picture (Seamless)):
 
 	{
 		"url": "http://cyberjapandata.gsi.go.jp/xyz/seamlessphoto/",
@@ -60,6 +61,7 @@ Set the map tile acquisition destination for each teacher data and input data. F
 In tile map format "format", tile coordinates, extension, WMTS parameters etc. are mainly set. Please set according to the format of the acquisition destination.
 
 Please describe the tile coordinates as follows.
+
 
 	{z}: zoom level, {x}: X coordinate of tile, {y}: Y coordinate of tile
 
@@ -108,11 +110,12 @@ Also, `input_image{serial number}.png, target_image{serial number}.png` is gener
 ### Operating environment
 Operation is confirmed in the following environment.
 
-OS: Ubuntu 14.04 64bit
-Software: python 3.6.3 (using pyenv)
+	OS: Ubuntu 14.04 64bit
+	Software: python 3.6.3 (using pyenv)
 
 ### Installation method
 1. Install pyenv so that you can use python 3.6.3.
+
 
 	cd ~
 	sudo apt-get install -y git
@@ -124,11 +127,11 @@ Software: python 3.6.3 (using pyenv)
 
 	vim ~ / .bashrc
 	#Add the following.
-	#-----from here-----
+	# -----from here-----
 	export PYENV_ROOT = $ HOME / .pyenv
 	export PATH = $ PYENV_ROOT / bin: $ PATH
 	eval "$ (pyenv init -)"
-	#-----So far-----
+	# -----So far-----
 
 	source ~ / .bashrc
 
@@ -141,6 +144,7 @@ Software: python 3.6.3 (using pyenv)
 
 2. Install WebDNN.
 
+
 	cd ~
 	git clone https://github.com/mil-tokyo/webdnn
 	cd webdnn
@@ -150,6 +154,7 @@ Software: python 3.6.3 (using pyenv)
 	sudo pip install chainer
 
 3. Install Emscripten and Eigen.
+
 
 	cd ~
 	# cmake If you do not need 3.4.3 or higher install it
@@ -180,16 +185,17 @@ Software: python 3.6.3 (using pyenv)
 
 4. Install each package required for execution.
 
+
 	cd ~ / webdnn
 	sudo pip install pillow requests
 
 5. Create a workspace directory in the WebDNN directory.
 
+
 	mkdir workspace
 
 6. Set the source code in the train_dump directory in the workspace directory.
 Please refer to the following WebDNN document for environment setting.
-
 → <https://mil-tokyo.github.io/webdnn/docs/tutorial/setup.html>
 
 
