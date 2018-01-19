@@ -53,6 +53,10 @@ function stopTimer() {
 
 window.onload = function() {
 	viewer = new Cesium.Viewer('cesiumContainer');
+	var terrainProvider = new Cesium.CesiumTerrainProvider({
+	    url : '//assets.agi.com/stk-terrain/world'
+	});
+	viewer.terrainProvider = terrainProvider;
 
 	document.getElementById("modelURL").value = './csmap';
 	document.getElementById("tileURL").value = "https://gsj-seamless.jp/labs/elev/m/{z}/{y}/{x}.png";
