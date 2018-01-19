@@ -55,7 +55,7 @@ window.onload = function() {
 	viewer = new Cesium.Viewer('cesiumContainer');
 
 	document.getElementById("modelURL").value = './csmap';
-	document.getElementById("tileURL").value = "http://gsj-seamless.jp/labs/elev/m/{z}/{y}/{x}.png";
+	document.getElementById("tileURL").value = "https://gsj-seamless.jp/labs/elev/m/{z}/{y}/{x}.png";
 	document.getElementById("tileStartX").value = 7075;
 	document.getElementById("tileEndX").value = 7082;
 	document.getElementById("tileStartY").value = 3299;
